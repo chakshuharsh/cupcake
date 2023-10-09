@@ -106,13 +106,21 @@ fun OrderSummaryScreen(
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
+<<<<<<< HEAD
                     onClick = { onSendButtonClicked(newOrder, orderSummary) }
+=======
+                    onClick = {onSendButtonClicked(numberOfCupcakes, orderSummary)}
+>>>>>>> starter
                 ) {
                     Text(stringResource(R.string.send))
                 }
                 OutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
+<<<<<<< HEAD
                     onClick = onCancelButtonClicked
+=======
+                    onClick =   onCancelButtonClicked
+>>>>>>> starter
                 ) {
                     Text(stringResource(R.string.cancel))
                 }

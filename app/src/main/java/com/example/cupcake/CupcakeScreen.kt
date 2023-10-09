@@ -17,9 +17,13 @@ package com.example.cupcake
 
 import android.content.Context
 import android.content.Intent
+<<<<<<< HEAD
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+=======
+import androidx.compose.foundation.layout.fillMaxHeight
+>>>>>>> starter
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -35,21 +39,31 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+<<<<<<< HEAD
 import androidx.compose.ui.res.dimensionResource
+=======
+>>>>>>> starter
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+<<<<<<< HEAD
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcake.data.DataSource
 import com.example.cupcake.data.OrderUiState
+=======
+
+import androidx.navigation.compose.rememberNavController
+import com.example.cupcake.data.DataSource
+>>>>>>> starter
 import com.example.cupcake.ui.OrderSummaryScreen
 import com.example.cupcake.ui.OrderViewModel
 import com.example.cupcake.ui.SelectOptionScreen
 import com.example.cupcake.ui.StartOrderScreen
 
+<<<<<<< HEAD
 /**
  * enum values that represent the screens in the app
  */
@@ -60,18 +74,34 @@ enum class CupcakeScreen(@StringRes val title: Int) {
     Summary(title = R.string.order_summary)
 }
 
+=======
+
+enum class CupcakeScreen(){
+    Start,
+    Flavor,
+    Pickup,
+    Summary
+}
+>>>>>>> starter
 /**
  * Composable that displays the topBar and displays back button if back navigation is possible.
  */
 @Composable
 fun CupcakeAppBar(
+<<<<<<< HEAD
     currentScreen: CupcakeScreen,
+=======
+>>>>>>> starter
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
+<<<<<<< HEAD
         title = { Text(stringResource(currentScreen.title)) },
+=======
+        title = { Text(stringResource(id = R.string.app_name)) },
+>>>>>>> starter
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
@@ -94,23 +124,32 @@ fun CupcakeApp(
     viewModel: OrderViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
+<<<<<<< HEAD
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
     val currentScreen = CupcakeScreen.valueOf(
         backStackEntry?.destination?.route ?: CupcakeScreen.Start.name
     )
+=======
+>>>>>>> starter
 
     Scaffold(
         topBar = {
             CupcakeAppBar(
+<<<<<<< HEAD
                 currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
+=======
+                canNavigateBack = false,
+                navigateUp = { /* TODO: implement back navigation */ }
+>>>>>>> starter
             )
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
+<<<<<<< HEAD
 
         NavHost(
             navController = navController,
@@ -192,10 +231,86 @@ private fun shareOrder(context: Context, subject: String, summary: String) {
         putExtra(Intent.EXTRA_SUBJECT, subject)
         putExtra(Intent.EXTRA_TEXT, summary)
     }
+=======
+NavHost(
+    navController=  navController ,
+     startDestination = CupcakeScreen.Start.name,
+         modifier = Modifier.padding(innerPadding)
+){
+    composable(route = CupcakeScreen.Start.name) {
+        StartOrderScreen(
+            quantityOptions = DataSource.quantityOptions,
+            onNextButtonClicked = {
+                viewModel.setQuantity(it)
+                navController.navigate(CupcakeScreen.Flavor.name)
+
+            }
+        )
+    }
+    composable(route = CupcakeScreen.Flavor.name) {
+        val context = LocalContext.current
+        SelectOptionScreen(
+            subtotal = uiState.price,
+            onNextButtonClicked = { navController.navigate(CupcakeScreen.Pickup.name) },
+            onCancelButtonClicked = { cancelOrderAndNavigateToStart(viewModel, navController)},
+            options = DataSource.flavors.map { id -> context.resources.getString(id) },
+            onSelectionChanged = { viewModel.setFlavor(it) },
+            modifier = Modifier.fillMaxHeight()
+        )
+    }
+    composable(route = CupcakeScreen.Pickup.name) {
+        SelectOptionScreen(
+            subtotal = uiState.price,
+            onNextButtonClicked = { navController.navigate(CupcakeScreen.Summary.name) },
+            onCancelButtonClicked = {cancelOrderAndNavigateToStart(viewModel, navController)},
+            options = uiState.pickupOptions,
+            onSelectionChanged = { viewModel.setDate(it) },
+            modifier = Modifier.fillMaxHeight()
+        )
+    }
+    composable(route = CupcakeScreen.Summary.name) {
+        val context = LocalContext.current
+        OrderSummaryScreen(
+            orderUiState = uiState,
+            onCancelButtonClicked = {cancelOrderAndNavigateToStart(viewModel, navController)},
+            onSendButtonClicked = { subject: String, summary: String ->
+                shareOrder(context, subject = subject, summary = summary)
+            },
+            modifier = Modifier.fillMaxHeight()
+        )
+    }
+}
+    }
+}
+
+private fun shareOrder(context: Context, subject:String, summary : String){
+val intent=Intent(Intent.ACTION_SEND).apply {
+    type = "text/plain"
+    putExtra(Intent.EXTRA_SUBJECT, subject)
+    putExtra(Intent.EXTRA_SUBJECT, summary)
+// instead of using apply function we can also declare type  and these putExtra() functions separately like this
+//    val intent = Intent(Intent.ACTION_SEND)
+//    intent.type = "text/plain"
+//    intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+//    intent.putExtra(Intent.EXTRA_TEXT, summary)
+}
+>>>>>>> starter
     context.startActivity(
         Intent.createChooser(
             intent,
             context.getString(R.string.new_cupcake_order)
         )
     )
+<<<<<<< HEAD
+=======
+
+}
+
+private fun cancelOrderAndNavigateToStart(
+    viewModel: OrderViewModel,
+    navController: NavHostController
+){
+viewModel.resetOrder()
+    navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
+>>>>>>> starter
 }

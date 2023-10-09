@@ -9,7 +9,11 @@ TODO
 
 
 Pre-requisites
+<<<<<<< HEAD
 --------------
+=======
+-------------- 
+>>>>>>> starter
 * Experience with Kotlin syntax.
 * How to create and run a project in Android Studio.
 * How to create composable functions 

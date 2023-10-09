@@ -21,7 +21,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+<<<<<<< HEAD
 import androidx.compose.foundation.layout.fillMaxHeight
+=======
+>>>>>>> starter
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,6 +42,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+<<<<<<< HEAD
+=======
+import com.example.cupcake.CupcakeScreen
+>>>>>>> starter
 import com.example.cupcake.R
 import com.example.cupcake.data.DataSource
 
@@ -86,7 +93,11 @@ fun StartOrderScreen(
                 quantityOptions.forEach { item ->
                     SelectQuantityButton(
                         labelResourceId = item.first,
+<<<<<<< HEAD
                         onClick = { onNextButtonClicked(item.second) }
+=======
+                        onClick = {onNextButtonClicked(item.second)}
+>>>>>>> starter
                     )
                 }
             }
@@ -117,7 +128,13 @@ fun SelectQuantityButton(
 fun StartOrderPreview(){
     StartOrderScreen(
         quantityOptions = DataSource.quantityOptions,
+<<<<<<< HEAD
         onNextButtonClicked = {},
+=======
+        onNextButtonClicked={
+
+        },
+>>>>>>> starter
         modifier = Modifier.fillMaxSize().padding(dimensionResource(R.dimen.padding_medium))
     )
 }
