@@ -106,7 +106,7 @@ fun OrderSummaryScreen(
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = {onSendButtonClicked(numberOfCupcakes, orderSummary)}
                 ) {
                     Text(stringResource(R.string.send))
                 }
